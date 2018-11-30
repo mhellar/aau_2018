@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Internet of Things</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css" id="theme">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+    <div class="reveal">
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+            <section data-background="img/background.png">
+                <figure>
+                    <h2 class="intro">Internet of Things</h2 class="intro">
+                    <h2 class="intro">Internet of Things</h2 class="intro">
+                    <h2 class="intro">Internet of Things</h2 class="intro">
+                    <h2 class="intro">Internet of Things</h2 class="intro">
+                </figure>
+            </section>
+
+            <section data-background="img/background.png" data-background-transition="zoom">
+
+                <p><b><br><a href="https://github.com/mhellar/electronicartworks/blob/gh-pages/day2/codeDay2.zip">Grab
+                            the code here:
+                            https://github.com/mhellar/electronicartworks/blob/gh-pages/day2/codeDay2.zip</a></b></p>
+            </section>
+
+            <section>
+                <ul>
+                    <h3>Topics for Today:</h3>
+                    <li class="fragment">Brainstorming the next phase of you projects</li>
+                    <li class="fragment">Soldering in small groups</li>
+                    <li class="fragment">Connecting the LCD Display</li>
+                    <li class="fragment">Javascript Robotics, Show BART data on the LCD</li>
+                </ul>
+            </section>
+            <section>
+                <img src="img/lcd2.jpg"><br>
+            </section>
+            <section>
+                <img src="img/header.jpg"><br>
+            </section>
+            <section data-background-image="img/lcd.png">
+            </section>
+            <section>
+                To wire your LCD screen, connect the following pins:
+                <br><br>
+                <ul>
+                    <li>LCD RS pin to digital pin 12</li>
+                    <li>LCD Enable pin to digital pin 11</li>
+                    <li>LCD D4 pin to digital pin 5</li>
+                    <li>LCD D5 pin to digital pin 4</li>
+                    <li>LCD D6 pin to digital pin 3</li>
+                    <li>LCD D7 pin to digital pin 2</li><br> Additionally, wire a 10k pot to +5V and GND, with it's
+                    wiper (output) to LCD screens VO pin (pin3). A 220 ohm resistor is used to power the backlight of
+                    the display, usually on pin 15 and 16 of
+                    the LCD connector
+            </section>
+            <section>
+                <img src="img/lcd.png"><br>
+            </section>
+            <section>
+                Run HelloWorldLCD
+            </section>
+            <section>
+                Run SerialDisplay - Open serial monitor and pass some data
+            </section>
+            <section>
+                <a href="https://www.arduino.cc/en/Reference/LiquidCrystal">Arduino Liquid Crystal Display Library</a>
+            </section>
+
+            <section>
+                A simple BART Program
+            </section>
+            <section>
+                <ul>
+                    <li>Make a new directory somehwere called BARTPredict.</li>
+                    <li class="fragment">Open The terminal and CD into that directory</li>
+                    <li class="fragment">Drag the folder on to you preferred text editor</li>
+                </ul>
+            </section>
+            <section>
+                <ul>
+                    <li>In the Terminal type 'npm init'</li>
+                    <li class="fragment">Answer the questions</li>
+                    <li class="fragment">then type 'npm install bart --save</li>
+                </ul>
+            </section>
+            <section>
+                <h3>make a new file 'index.js'</h3>
+                <pre><code class="hljs" data-trim contenteditable width>
+var bart = require('bart').createClient({ "interval": 3000 });
+
+bart.on('dbrk', function(estimates) {
+    console.log(estimates);
+});
+                </code></pre>
+                <a href="https://www.npmjs.com/package/bart">https://www.npmjs.com/package/bart</a>
+            </section>
+            <section>
+                The Bart Module returned something called Javascript Object Notation(JSON)<br> We can easily examine
+                that here:
+                <a href="http://jsonviewer.stack.hu/">http://jsonviewer.stack.hu/</a>
+            </section>
+
+            <section>
+                <h3>make a new file 'index.js'</h3>
+                <pre><code class="hljs" data-trim contenteditable width>
+var bart = require('bart').createClient({ "interval": 3000 });
+
+bart.on('dbrk', function(estimates) {
+    // console.log(estimates);
+    console.log("next train is headed " + estimates[0].direction + " in " + estimates[0].minutes + " destination is " + estimates[0].destination);
+});
+                </code></pre>
+                <a href="https://www.npmjs.com/package/bart">https://www.npmjs.com/package/bart</a>
+            </section>
+            <section data-background-image="img/johnny-five-fb.png">
+            </section>
+
+            <section>
+                <a href="http://johnny-five.io/">http://johnny-five.io/</a>
+            </section>
+
+            <section>
+                To use Johnny-Five we need to install Firmata on to our Arduino
+                File->Examples->Firmata->StandardFirmata<br> Firmata is a generic protocol for communicating with
+                microcontrollers from software on a host computer. It is intended to work
+                with any host computer software package.
+            </section>
+
+            <section>
+                <a href="http://johnny-five.io/api/lcd">http://johnny-five.io/api/lcd/</a>
+            </section>
+            <section>
+                Lets try the LCD control example<br> CD into the j5_lcd folder from the terminal
+            </section>
+            <section>
+                Lets try the LCD control example<br> CD into the j5_lcd folder from the terminal<br> type 'npm install'<br>
+                run 'node app.js'<br> run 'node app2.js'
+            </section>
+            <section>
+                Lets try the LCD Bart example<br> CD into the j5_lcd_bart folder from the terminal<br> type 'npm
+                install'<br> run 'node app.js'
+            </section>
+            <section>
+                Lets try the LCD Weather example<br> CD into the j5_lcd_weather folder from the terminal<br> type 'npm
+                install'<br> run 'node app.js'
+            </section>
+
+    
+
+            <!--
+            <section>
+                <img src="BT_HC05_Annotated.jpg">
+            </section>
+            <section>
+                <img src="basicbt.png">
+            </section>
+            <section>
+                <img src="btjoystick.png">
+            </section>-->
+        </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+        // Full list of configuration options available at:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+            // Optional reveal.js plugins
+            dependencies: [{
+                src: 'lib/js/classList.js',
+                condition: function () {
+                    return !document.body.classList;
+                }
+            }, {
+                src: 'plugin/markdown/marked.js',
+                condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }, {
+                src: 'plugin/markdown/markdown.js',
+                condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }, {
+                src: 'plugin/highlight/highlight.js',
+                async: true,
+                condition: function () {
+                    return !!document.querySelector('pre code');
+                },
+                callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }, {
+                src: 'plugin/zoom-js/zoom.js',
+                async: true
+            }, {
+                src: 'plugin/notes/notes.js',
+                async: true
+            }]
+        });
+    </script>
+</body>
+
+</html>
